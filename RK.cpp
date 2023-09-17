@@ -8,7 +8,7 @@ TGraph RK1Solve(double (*f)(double x, double y), double y0,
   
   double y=y0;                   // dependent variable to plot vs x
   TGraph tg;
-  tg.SetPoint(0,x0,y0);
+  tg.SetPoint(0,x0,y0);          // initial condition
 	      
   double k1;
   for (int i=0; i<nsteps-1; i++){
@@ -29,7 +29,7 @@ TGraph RK2Solve(double (*f)(double x, double y), double y0,
   
   double y=y0;                   // dependent variable to plot vs x
   TGraph tg;
-  tg.SetPoint(0,x0,y0);
+  tg.SetPoint(0,x0,y0);          // initial condition
 	      
   double k1,k2;
   for (int i=0; i<nsteps-1; i++){

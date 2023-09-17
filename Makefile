@@ -13,4 +13,4 @@ RK: RK.cpp RK.hpp
 	$(GXX) -c -o RK.o RK.cpp $(ROOTCFLAGS) 
 
 clean:
-	rm -f RKdemo RK.o *~
+	rm -f RKdemo *.dat RK.o *~

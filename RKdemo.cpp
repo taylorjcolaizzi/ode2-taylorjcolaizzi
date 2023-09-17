@@ -25,7 +25,7 @@ int main(int argc, char **argv){
   TApplication theApp("App", &argc, argv); // init ROOT App for displays
 
   // solve our DEQ using RK1 or RK2 methods!
-  // Two examples are given.  Choose a fucntion for testing
+  // Two examples are given.  Choose a function for testing
   TGraph tg1=RK1Solve(fun1,3,30,0,3);                     // initial condition y(0)=3
   TGraph tg2=RK2Solve(fun1,3,30,0,3);
   TF1 fun_sol=TF1("fun_sol","3*exp(-2*x)",0,3);           // exact solution
@@ -52,6 +52,7 @@ int main(int argc, char **argv){
   fun_sol.SetLineStyle(2);
   
   // plot the results
+  tg1.SetTitle("ODE demo;x;y");
   tg1.Draw("AP");
   tg2.Draw("P");
   fun_sol.Draw("same");
@@ -62,6 +63,8 @@ int main(int argc, char **argv){
   tl->AddEntry(&fun_sol,"Exact Solution","l");
   tl->Draw();
   c1->Draw();
+  c1->Update();
+  c1->Print("OED_cpp.png");
 
   // retreive the data from the graphs and write to a file
   FILE *fp=fopen("RKdemo.dat","w");
