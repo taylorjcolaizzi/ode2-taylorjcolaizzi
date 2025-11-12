@@ -53,12 +53,12 @@ TGraph RK4Solve(double (*f)(double x, double y), double y0,
   tg.SetPoint(0,x0,y0);          // initial condition
 	      
   double k1,k2,k3,k4;
-  for (int i=0; i<nsteps-1; i++){
+  for (int i=0; i<nsteps-1; i++){ // adapted from Fitzpatrick p. 109
     k1 = h*f(x,y);
-    k2 = h*f(x+h/2,y+h*k1/2);
-    k3 = h*f(x+h/2,y+h*k2/2);
-    k4 = h*f(x+h,y+h*k3);
-    y  = y + 1/6 * (k1 + 2 * k2 + 2 * k3 + k4); // already multiplied h
+    k2 = h*f(x+h/2,y+k1/2);
+    k3 = h*f(x+h/2,y+k2/2);
+    k4 = h*f(x+h,y+k3);
+    y  = y + k1/6 + k2/3 + k3/3 + k4/6;
     x+=h;
     tg.SetPoint(i+1,x,y);
   }

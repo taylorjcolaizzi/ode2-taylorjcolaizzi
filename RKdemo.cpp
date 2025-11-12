@@ -34,6 +34,7 @@ int main(int argc, char **argv){
   // TGraph tg2=RK2Solve(fun1,3,30,0,3);
   // TF1 fun_sol=TF1("fun_sol","3*exp(-2*x)",0,3);           // exact solution
   TGraph tg1=RK1Solve(fun2,2,100,1,100);                // initial condition y(1)=2
+  // TGraph tg2=RK2Solve(fun2,2,100,1,100);
   TGraph tg2=RK4Solve(fun2,2,100,1,100);
   TF1 fun_sol=TF1("fun_sol","-2*log(x)/x+2/x",1,100);   // exact solution
 
@@ -63,7 +64,7 @@ int main(int argc, char **argv){
   
   TLegend *tl = new TLegend(0.6,0.7,0.9,0.9);
   tl->AddEntry(&tg1,"RK1 Solution","p");
-  tl->AddEntry(&tg2,"RK2 Solution","p");
+  tl->AddEntry(&tg2,"RK4 Solution","p");
   tl->AddEntry(&fun_sol,"Exact Solution","l");
   tl->Draw();
   c1->Draw();
