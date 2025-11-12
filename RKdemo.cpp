@@ -34,8 +34,8 @@ int main(int argc, char **argv){
   // TGraph tg2=RK2Solve(fun1,3,30,0,3);
   // TF1 fun_sol=TF1("fun_sol","3*exp(-2*x)",0,3);           // exact solution
   TGraph tg1=RK1Solve(fun2,2,100,1,100);                // initial condition y(1)=2
-  // TGraph tg2=RK2Solve(fun2,2,100,1,100);
-  TGraph tg2=RK4Solve(fun2,2,100,1,100);
+  TGraph tg2=RK2Solve(fun2,2,100,1,100);
+  TGraph tg4=RK4Solve(fun2,2,100,1,100);
   TF1 fun_sol=TF1("fun_sol","-2*log(x)/x+2/x",1,100);   // exact solution
 
   // ******************************************************************************
@@ -49,10 +49,13 @@ int main(int argc, char **argv){
 
   tg1.SetMarkerSize(0.015*dh/8);  // size scale: 1 = 8 pixels, so here we choose the size to be 1.5% of the window height
   tg2.SetMarkerSize(0.015*dh/8);
+  tg4.SetMarkerSize(0.015*dh/8);
   tg1.SetMarkerStyle(kFullTriangleUp);
   tg2.SetMarkerStyle(kFullTriangleDown);
+  tg4.SetMarkerStyle(kOpenDiamondCross);
   tg1.SetMarkerColor(kRed);
   tg2.SetMarkerColor(kGreen-2);
+  tg4.SetMarkerColor(kOrange);
   fun_sol.SetLineColor(kBlack);
   fun_sol.SetLineStyle(2);
   
@@ -60,23 +63,27 @@ int main(int argc, char **argv){
   tg1.SetTitle("ODE demo;x;y");
   tg1.Draw("AP");
   tg2.Draw("P");
+  tg4.Draw("P");
   fun_sol.Draw("same");
   
   TLegend *tl = new TLegend(0.6,0.7,0.9,0.9);
   tl->AddEntry(&tg1,"RK1 Solution","p");
-  tl->AddEntry(&tg2,"RK4 Solution","p");
+  tl->AddEntry(&tg2,"RK2 Solution","p");
+  tl->AddEntry(&tg4,"RK4 Solution","p");
   tl->AddEntry(&fun_sol,"Exact Solution","l");
   tl->Draw();
   c1->Draw();
   c1->Update();
   c1->Print("OED_cpp.png");
+  c1->Print("RK4.pdf");
 
   // retreive the data from the graphs and write to a file
   FILE *fp=fopen("RKdemo.dat","w");
-  double *x, *y1, *y2;
+  double *x, *y1, *y2, *y4;
   x=tg1.GetX();
   y1=tg1.GetY();
   y2=tg2.GetY();
+  y4=tg4.GetY();
   fprintf(fp,"#%8s %9s %9s %9s\n","x","RK1","RK2","Exact");
   for (int i=0; i<tg1.GetN(); i++){
     fprintf(fp,"%9.4lf %9.4lf %9.4lf %9.4lf\n",x[i],y1[i],y2[i],fun_sol.Eval(x[i]));
