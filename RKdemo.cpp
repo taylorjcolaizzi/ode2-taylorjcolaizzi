@@ -22,7 +22,11 @@ double fun2(double x, double y){
 }                       // -2*log(|x|)/x+2/x  ; with initial condition y(0)=2
 
 double fun3(double x, double y){
-  return y+(y/x) -2;    // f = y' = y + (y/x) + 2
+  return -3*y + 2*x - 1;    // f = y' = -3y + 2x -1
+}
+
+double fun4(double x, double y){
+  return (y + 2 + x) / (2 + x); // f = y' = (y + 2 + x)/(2 + x)
 }
 
 int main(int argc, char **argv){
